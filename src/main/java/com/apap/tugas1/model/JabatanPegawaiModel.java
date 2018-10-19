@@ -27,6 +27,7 @@ public class JabatanPegawaiModel implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_jabatan", referencedColumnName = "id", nullable=false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
 	private JabatanModel jabatan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

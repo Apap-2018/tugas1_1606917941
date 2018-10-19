@@ -25,23 +25,23 @@
               	<form th:action="@{/pegawai/cari}" method="GET">
 				    <div class="form-group">
 					    <label for="location">Provinsi:</label>
-					    <select  class="form-control" required="required" name="idProvinsi" id="provinsi">
-					      <option disabled="disabled" selected="selected" > -- Pilih Provinsi -- </option>
+					    <select  class="form-control" name="idProvinsi" id="provinsi">
+					      <option disabled="disabled" selected="selected"> -- Pilih Provinsi -- </option>
 					      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
 					      th:text="${provinsi.nama}"></option>
 					    </select>
 					</div>
 					<div class="form-group">
 				       <label for="location">Instansi:</label>
-				       <select class="form-control" name="idInstansi" id="instansi" required="required">
-				       			 <option disabled="disabled" selected="selected" > -- Pilih Instansi -- </option>
+				       <select class="form-control" name="idInstansi" id="instansi">
+				       			 <option disabled="disabled" selected="selected"> -- Pilih Instansi -- </option>
 				           
 				       </select>
 					</div>
 					  
 					<div class="form-group">
 				       <label for="location">Jabatan:</label>
-				       <select class="form-control" name="idJabatan" id="idJabatan" required="required">
+				       <select class="form-control" name="idJabatan" id="idJabatan">
 				       		<option disabled="disabled" selected="selected" > -- Pilih Jabatan -- </option>
 				           	<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" 
 					      th:text="${jabatan.nama}"></option>	
@@ -64,7 +64,6 @@
 	                <th>Tanggal Lahir</th>
 	                <th>Tahun Masuk</th>
 	                <th>Instansi</th>
-	                <th>Jabatan</th>
 	            </tr>
 	        </thead>
 	    </table>

@@ -39,7 +39,6 @@ public class JabatanModel implements Serializable {
 	private double gajiPokok;
 	
 	@OneToMany(mappedBy="jabatan", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JsonIgnore
 	private List<JabatanPegawaiModel> jabatanPegawai;
 
 	public long getId() {

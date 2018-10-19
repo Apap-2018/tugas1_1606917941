@@ -6,7 +6,8 @@ $(document).ready( function () {
 			"aoColumns": [
 			    { "mData": "nama"},
 		      { "mData": "deskripsi" },
-				  { "mData": "gajiPokok"}
+				  { "mData": "gajiPokok"},
+				  {"mData": "jabatanPegawai.length"}
 			]
 	 })
 });
