@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Detail Jabatan</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br/>
+	<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-header">
+					Detail Jabatan
+				</div>
+				<table class="table table-striped">
+					<tbody>
+						<tr>
+							<td>Nama</td>
+							<td th:text="${jabatan.nama}"></td>
+						</tr>
+						<tr>
+							<td>Deskripsi</td>
+							<td th:text="${jabatan.deskripsi}"></td>
+						</tr>
+						<tr>
+							<td>Gaji Pokok</td>
+							<td th:text="${jabatan.gajiPokok}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="row">
+					<div class="col-md-1">
+						<form th:action="@{/jabatan/update/}" method="GET">
+							<input type="hidden" name="idJabatan" th:value="${jabatan.id}" />
+							<button type="submit" class="btn btn-success btn-sm">Ubah</button>
+						</form>
+					</div>
+					<div class="col-md-1">
+						<form th:action="@{/jabatan/hapus}" method="POST">
+							<input type="hidden" name="idJabatan" th:value="${jabatan.id}" />
+							<button type="submit" class="btn btn-success btn-sm">Hapus</button>
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

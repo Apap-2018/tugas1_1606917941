@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br/>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						Lihat Data Pegawai berdasarkan NIP
+					</div>
+					<form th:action="@{/pegawai/view}" method="GET">
+						<div class="card-body">
+							<label>Masukkan Nomor Induk Pegawai</label>
+							<input type="text" name="nip" class="form-control"/>
+							<p></p>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						Lihat Detail Jabatan
+					</div>
+					<form th:action="@{/jabatan/view}" method="GET">
+						<div class="card-body">
+							<label>Pilih Jabatan</label>
+							<select class="form-control" name="idJabatan">
+						    	<option value="-" label="--Pilih Jabatan--" />
+						    	<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+					    	</select>
+							<p></p>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						Lihat Pegawai Termuda dan Tertua
+					</div>
+					<form th:action="@{/pegawai/termuda-tertua}" method="GET">
+						<div class="card-body">
+							<label>Pilih Instansi</label>
+							<select class="form-control" name="idInstansi">
+						    	<option value="-" label="--Pilih Instansi--" />
+						    	<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}+ ' - ' + ${instansi.provinsi.nama}"></option>
+					    	</select>
+							<p></p>
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<head>
+	<meta charset="utf-8" />
+	<title>Daftar Jabatan</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+	<script src="/js/datatable.js"></script>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+</head>
+
+<body>
+	<br>
+	<div class="container-fluid">
+		<table id="jabatanTable" class="display">
+	       <thead>
+	            <tr>
+					<th>Nama</th>
+	                <th>Deskripsi</th>
+	                <th>Gaji Pokok</th>
+	            </tr>
+	        </thead>
+	    </table>
+	</div>
+	
+    
+</body>
+</html>
