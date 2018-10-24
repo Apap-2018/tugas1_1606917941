@@ -26,13 +26,13 @@ public class JabatanPegawaiModel implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_jabatan", referencedColumnName = "id", nullable=false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	@JsonIgnore
 	private JabatanModel jabatan;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_pegawai", referencedColumnName = "id", nullable=false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
+	@OnDelete(action = OnDeleteAction.NO_ACTION)
 	@JsonIgnore
 	private PegawaiModel pegawai;
 

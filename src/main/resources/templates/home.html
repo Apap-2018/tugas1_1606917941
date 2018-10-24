@@ -38,7 +38,7 @@
 						<div class="card-body">
 							<label>Pilih Jabatan</label>
 							<select class="form-control" name="idJabatan">
-						    	<option value="-" label="--Pilih Jabatan--" />
+						    	<option disabled="disabled" selected="selected" label="--Pilih Jabatan--" />
 						    	<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
 					    	</select>
 							<p></p>
@@ -59,7 +59,7 @@
 						<div class="card-body">
 							<label>Pilih Instansi</label>
 							<select class="form-control" name="idInstansi">
-						    	<option value="-" label="--Pilih Instansi--" />
+						    	<option disabled="disabled" selected="selected" label="--Pilih Instansi--" />
 						    	<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}+ ' - ' + ${instansi.provinsi.nama}"></option>
 					    	</select>
 							<p></p>

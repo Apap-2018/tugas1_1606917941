@@ -7,7 +7,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 	<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<script src="/js/pegawaidatatable.js"></script>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	
@@ -64,12 +63,35 @@
 	                <th>Tanggal Lahir</th>
 	                <th>Tahun Masuk</th>
 	                <th>Instansi</th>
+	                <th>Jabatan</th>
 	            </tr>
 	        </thead>
+	        <tbody>
+					<tr th:each="pegawai : *{listPencarian}">
+						<td th:text="${pegawai.nip}"></td>
+						<td th:text="${pegawai.nama}"></td>
+						<td th:text="${pegawai.tempatLahir}"></td>
+						<td th:text="${pegawai.tanggalLahir}"></td>
+						<td th:text="${pegawai.tahunMasuk}"></td>
+						<td th:text="${pegawai.instansi.nama} + '-' + ${pegawai.instansi.provinsi.nama}"></td>
+						<td>
+							<ol>
+								<li th:each="jabatan: ${pegawai.jabatanPegawai}" th:text="${jabatan.jabatan.nama}"></li>
+							</ol>
+						</td>
+					
+					
+					</tr>
+				</tbody>
 	    </table>
     </div>	
 </body>
 <script th:inline="javascript">
+$(document).ready(function() {
+    $('#pegawaiTable').DataTable();
+} );
+
+
 $('#provinsi').change(
         function() {
         	console.log("ayam")
@@ -78,7 +100,7 @@ $('#provinsi').change(
                 ajax : 'true'
             }, function(data) {
             	console.log("ayam betutu");
-            	var html = '<option value="">--Pilih Instansi--</option>';
+            	var html = '<option disabled="disabled" selected="selected">--Pilih Instansi--</option>';
                 var len = data.length;
                 for ( var i = 0; i < len; i++) {
                     html += '<option value="' + data[i].id + '">'

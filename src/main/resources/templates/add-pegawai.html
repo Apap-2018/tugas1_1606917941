@@ -18,7 +18,7 @@
                        	Tambah Pegawai
                     </div>
                     <div class="card-body">
-                        <form th:action="@{/pegawai/tambah}" th:object="${pegawaiBaru}" method="POST">
+                        <form th:action="@{/pegawai/tambah}" id="pegawaiForm" th:object="${pegawaiBaru}" method="POST">
                             Nama: <br>
                             <input type="text" name="nama" class="form-control" th:value="*{nama}" required/>
                             <br>
@@ -35,7 +35,6 @@
 							    <label for="location">Provinsi:</label>
 							    <br>
 							    <select  class="form-control" required="required" name="provinsi" id="provinsi">
-							      <option disabled="disabled" selected="selected" > -- Pilih Provinsi -- </option>
 							      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
 							      th:text="${provinsi.nama}"></option>
 							    </select>
@@ -44,7 +43,6 @@
 						       <label for="location">Instansi:</label>
 						       <br>
 						       <select class="form-control" name="instansi" id="instansi" required="required">
-						       			 <option disabled="disabled" selected="selected" > -- Pilih Instansi -- </option>
 						           
 						       </select>
 							</div>
@@ -52,10 +50,10 @@
 							
 							<label for="location">Jabatan:</label>
 							<div class="form-group" th:each="jabatanP, rowStat : *{jabatanPegawai}">
-								<select class="form-control" name="jabatanPegawai" required="required">
-									<option disabled="disabled" selected="selected" > -- Pilih Jabatan -- </option>
-									<option th:each="jabatan : ${listJabatan}" th:field="*{jabatanPegawai[__${rowStat.index}__].jabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+								<select class="form-control" th:field="*{jabatanPegawai[__${rowStat.index}__].jabatan}">
+									<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
 								</select>
+								
 								<button type="submit" name="removeRow" 
 		                					th:value="${rowStat.index}" class="btn btn-danger btn-sm">Hapus</button>
 							</div>
@@ -64,7 +62,7 @@
                             
                             <br><br>
                             
-                            <button type="submit" name="save" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -81,8 +79,8 @@ $('#provinsi').change(
                 idProvinsi : $(this).val(),
                 ajax : 'true'
             }, function(data) {
-            	var html = '<option value="">--Pilih Instansi--</option>';
-                var len = data.length;
+            	var html = '';
+                var len = data.length; 
                 for ( var i = 0; i < len; i++) {
                     html += '<option value="' + data[i].id + '">'
                             + data[i].nama + '</option>';

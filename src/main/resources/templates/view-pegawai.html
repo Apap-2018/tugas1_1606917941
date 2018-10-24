@@ -9,55 +9,62 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br/>
-	<h3 th:text="'Lihat Data Pegawai - '+${pegawai.nip}"></h3>
-	<br>
-	<table class="table no-border">
-	  <thead>
-	    <tr>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>NIP</td>
-	      <td th:text="${pegawai.nip}">
-	    </tr>
-	    <tr>
-	      <td>Nama</td>
-	      <td th:text="${pegawai.nama}">
-	    </tr>
-	    <tr>
-	      <td>Tempat Lahir</td>
-	      <td th:text="${pegawai.tempatLahir}">
-	    </tr>
-	    <tr>
-	      <td>Tanggal Lahir</td>
-	      <td th:text="${pegawai.tanggalLahir}">
-	    </tr>
-	    <tr>
-	      <td>Tahun Masuk</td>
-	      <td th:text="${pegawai.tahunMasuk}">
-	    </tr>
-	    <tr>
-	      <td>Instansi</td>
-	      <td th:text="${instansi}">
-	    </tr>
-	    <tr>
-	      <td>Jabatan</td>
-	      <td>
-	      	<ul th:each="jabatan : ${listJabatan}">
-				<li th:text="${jabatan.nama}"></li>
-			</ul>
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>Gaji</td>
-	      <td th:text="'Rp. '+${gaji}">
-	    </tr>
-	  </tbody>
-	</table>
-	<form th:action="@{/pegawai/ubah}" method="GET">
-		<input type="hidden" name="nip" th:value="${pegawai.nip}" />
-		<button type="submit" class="btn btn-success btn-sm">Ubah</button>
-	</form>
+	<div class="container-fluid">
+		<div class="row">
+			 <div class="col-md-6">
+            	<div class="card">
+            		<div class="card-header">
+						<h4><b th:text="'Lihat Data Pegawai - ' + ${pegawai.nip}"> </b></h4>
+					</div>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<td>Nama</td>
+								<td th:text="${pegawai.nama}"></td>
+							</tr>
+							<tr>
+								<td>Tempat Lahir</td>
+								<td th:text="${pegawai.tempatLahir}"></td>
+							</tr>
+							<tr>
+								<td>Tanggal Lahir</td>
+								<td th:text="${pegawai.tanggalLahir}"></td>
+							</tr>
+							<tr>
+								<td>Tahun Masuk</td>
+								<td th:text="${pegawai.tahunMasuk}"></td>
+							</tr>
+							<tr>
+						      <td>Instansi</td>
+						      <td th:text="${instansi}">
+						    </tr>
+							<tr>
+								<td>Jabatan</td>
+								<td>
+									<ul th:each="jabatan : ${listJabatan}">
+										<li th:text="${jabatan.nama}"></li>
+									</ul>
+								</td>
+							</tr>
+						    <tr>
+						      <td>Gaji</td>
+						      <td th:text="'Rp. '+${gaji}">
+						    </tr>
+							
+						</tbody>
+					</table>
+            	</div>
+            	</div>
+        	</div>
+        	<br>
+        	<div class="row">
+        		<div class="col-md-6">
+        		<form th:action="@{/pegawai/ubah}" method="GET">
+					<input type="hidden" name="nip" th:value="${pegawai.nip}" />
+					<button type="submit" class="btn btn-success btn-sm">Ubah</button>
+				</form>
+				</div>
+        	</div>
+     </div>
 </body>
 </html>

@@ -7,7 +7,7 @@ $(document).ready( function () {
 			    { "mData": "nama"},
 		      { "mData": "deskripsi" },
 				  { "mData": "gajiPokok"},
-				  {"mData": "jabatanPegawai.length"}
+				  { "mData": "jabatanPegawai.length"}
 			]
 	 })
 });

@@ -1,6 +1,5 @@
 package com.apap.tugas1.service;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -106,6 +105,39 @@ public class PegawaiServiceImpl implements PegawaiService {
 	public void addPegawaiBaru(PegawaiModel pegawai) {
 		// TODO Auto-generated method stub
 		pegawaiDb.save(pegawai);
+	}
+
+	@Override
+	public List<PegawaiModel> findPegawaiByInstansiAndJabatan(InstansiModel instansi, JabatanModel jabatan) {
+		// TODO Auto-generated method stub
+		List<PegawaiModel> pegawaiInstansi = instansi.getPegawaiInstansi();
+		List<PegawaiModel> pencarian = new ArrayList<>();
+		long idJabatan = jabatan.getId();
+		
+		for(PegawaiModel peg : pegawaiInstansi) {
+			for(JabatanPegawaiModel jab: peg.getJabatanPegawai()) {
+				if(jab.getJabatan().getId() == idJabatan) {
+					pencarian.add(peg);
+				}
+			}
+		}
+		return pencarian;
+	}
+
+	@Override
+	public List<PegawaiModel> findPegawaiByProvinsiAndJabatan(List<PegawaiModel> pegawaiProvinsi,
+			JabatanModel jabatan) {
+		
+		List<PegawaiModel> pencarian = new ArrayList<>();
+		
+		for(PegawaiModel peg: pegawaiProvinsi) {
+			for(JabatanPegawaiModel jab: peg.getJabatanPegawai()) {
+				if(jab.getJabatan().getId() == jabatan.getId()) {
+					pencarian.add(peg);
+				}
+			}
+		}
+		return pencarian;
 	}
 
 }
