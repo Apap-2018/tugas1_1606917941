@@ -9,7 +9,8 @@
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br/>
-	<h3 th:text="'Pegawai dengan NIP '+ ${nip} +' berhasil ditambahkan'"></h3>
+	<b><h3>Sukses!</h3></b>
+	<h3 th:text="'Pegawai dengan NIP '+ ${nip} +' berhasil '+${tujuan}"></h3>
 	
 
 </body>

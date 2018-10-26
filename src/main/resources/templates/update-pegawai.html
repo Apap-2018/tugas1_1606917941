@@ -19,24 +19,26 @@
                     </div>
                     <div class="card-body">
                         <form th:action="@{/pegawai/ubah}" th:object="${pegawaiTerbaru}" method="POST">
+                        	<input type="hidden" name="id" th:value="*{id}" >
+							<input type="hidden" name="nip" th:value="*{nip}" >
                             Nama: <br>
-                            <input type="text" name="nama" class="form-control" th:value="${pegawaiLama.nama}" required/>
+                            <input type="text" name="nama" class="form-control" th:value="*{nama}" required/>
                             <br>
                             Tempat Lahir: <br>
-                            <input type="text" name="tempatLahir" class="form-control" th:value="${pegawaiLama.tempatLahir}" required/>
+                            <input type="text" name="tempatLahir" class="form-control" th:value="*{tempatLahir}" required/>
                             <br>
                            	Tanggal Lahir: <br>
-                            <input type="date" name="tanggalLahir" class="form-control" th:value="${pegawaiLama.tanggalLahir}" required/>
+                            <input type="date" name="tanggalLahir" class="form-control" th:value="*{tanggalLahir}" required/>
                            	<br>
                            	Tahun Masuk: <br>
-                            <input type="number" name="tahunMasuk" class="form-control" th:value="${pegawaiLama.tahunMasuk}" required/>
+                            <input type="number" name="tahunMasuk" class="form-control" th:value="*{tahunMasuk}" required/>
                             <br>
 						    <div class="form-group">
 							    <label for="location">Provinsi:</label>
 							    <br>
 							    <select  class="form-control" required="required" name="provinsi" id="provinsi">
 							      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
-							      th:text="${provinsi.nama}" th:selected="${provinsi.id==pegawaiLama.instansi.provinsi.id}"></option>
+							      th:text="${provinsi.nama}" th:selected="${provinsi.id} == *{instansi.provinsi.id}"></option>
 							    </select>
 							</div>
 							<div class="form-group">
@@ -44,7 +46,7 @@
 						       <br>
 						       <select class="form-control" name="instansi" id="instansi" required="required">
 						           <option th:each="instansi : ${listInstansiProvinsi}" th:value="${instansi.id}" 
-							      th:text="${instansi.nama}" th:selected="${instansi.id==pegawaiLama.instansi.id}"></option>
+							      th:text="${instansi.nama}" th:selected="${instansi.id} == *{instansi.id}"></option>
 						       </select>
 							</div>
 							<br>
@@ -52,19 +54,20 @@
 							<label for="location">Jabatan:</label>
 							<br>	
 							<div class="form-group" th:each="jabatanP, rowStat : *{jabatanPegawai}">
-								<select class="form-control" name="jabatanPegawai" th:field="*{jabatanPegawai[__${rowStat.index}__].jabatan}">
+								<td th:text="${jabatanP.id}"></td>
+								<select class="form-control" th:field="*{jabatanPegawai[__${rowStat.index}__].jabatan}">
 									<option th:each="jabatan : ${listJabatan}"  th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
 								</select>
 								
-								<button type="submit" name="removeRow" 
+								<button type="submit" name="removeJabatan" 
 		                					th:value="${rowStat.index}" class="btn btn-danger btn-sm">Hapus</button>
 							</div>
 							
-							<!--  <button type="submit" name="addRow" class="btn btn-success btn-sm">Tambah Jabatan Lainnya</button>
-                            -->
+							<button type="submit" name="addJabatanBaru" class="btn btn-success btn-sm">Tambah Jabatan Lainnya</button>
+                        
                             <br><br>
                             
-                            <button type="submit" name="save" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>

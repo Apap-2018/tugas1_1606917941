@@ -34,24 +34,44 @@
 						    <div class="form-group">
 							    <label for="location">Provinsi:</label>
 							    <br>
-							    <select  class="form-control" required="required" name="provinsi" id="provinsi">
-							      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
-							      th:text="${provinsi.nama}"></option>
-							    </select>
+							    <span th:if="*{instansi} == null">
+							    	<select  class="form-control" required="required" name="provinsi" id="provinsi">
+								      <option disabled="disabled" selected="selected" >-- Pilih Provinsi --</option>
+								      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
+								      th:text="${provinsi.nama}"></option>
+								    </select>
+							    </span>
+							    
+							    <span th:unless="*{instansi} == null">
+								    <select  class="form-control" required="required" name="provinsi" id="provinsi">
+								      <option th:each="provinsi : ${listProvinsi}" th:value="${provinsi.id}" 
+								      th:text="${provinsi.nama}" th:selected="${provinsi.id} == *{instansi.provinsi.id}"></option>
+								    </select>
+							    </span>
 							</div>
 							<div class="form-group">
 						       <label for="location">Instansi:</label>
 						       <br>
-						       <select class="form-control" name="instansi" id="instansi" required="required">
-						           
-						       </select>
+						       
+						       <span th:if="*{instansi} == null">
+							       <select class="form-control" name="instansi" id="instansi" required="required">
+							       		<option disabled="disabled" selected="selected" >-- Pilih Instansi --</option>
+							       </select>
+						       </span>
+						       
+						       <span th:unless="*{instansi} == null">
+							       <select class="form-control" name="instansi" id="instansi" required="required">
+							           <option th:each="instansi : ${listInstansiProvinsi}" th:value="${instansi.id}" 
+								      th:text="${instansi.nama}" th:selected="${instansi.id} == *{instansi.id}"></option>
+							       </select>
+						       </span>
 							</div>
 							<br>
 							
 							<label for="location">Jabatan:</label>
 							<div class="form-group" th:each="jabatanP, rowStat : *{jabatanPegawai}">
 								<select class="form-control" th:field="*{jabatanPegawai[__${rowStat.index}__].jabatan}">
-									<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+									<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}" ></option>
 								</select>
 								
 								<button type="submit" name="removeRow" 
@@ -79,7 +99,7 @@ $('#provinsi').change(
                 idProvinsi : $(this).val(),
                 ajax : 'true'
             }, function(data) {
-            	var html = '';
+            	var html = '<option disabled="disabled" selected="selected">-- Pilih Instansi --</option>';
                 var len = data.length; 
                 for ( var i = 0; i < len; i++) {
                     html += '<option value="' + data[i].id + '">'

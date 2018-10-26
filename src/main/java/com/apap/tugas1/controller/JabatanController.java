@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +37,9 @@ public class JabatanController {
 	
 	@RequestMapping(value="/jabatan/tambah", method = RequestMethod.POST)
 	private String addJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model) {
-		model.addAttribute("penambahan", "Jabatan");
 		jabatanService.addJabatan(jabatan);
-		return "add";
+		model.addAttribute("tujuan", "ditambahkan");
+		return "update-add-jabatan";
 	}
 	
 	@RequestMapping(value="/jabatan/update", method = RequestMethod.GET)
@@ -53,7 +52,8 @@ public class JabatanController {
 	@RequestMapping(value = "/jabatan/update", method = RequestMethod.POST)
     private String updateJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model) {
         jabatanService.updateJabatan(jabatan);
-        return "update";
+        model.addAttribute("tujuan", "diubah");
+        return "update-add-jabatan";
     }
 	
 	@RequestMapping(value="/jabatan/hapus", method = RequestMethod.POST)

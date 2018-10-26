@@ -60,7 +60,7 @@ public class PegawaiModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private InstansiModel instansi;
 	
-	@OneToMany(mappedBy="pegawai", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="pegawai", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<JabatanPegawaiModel> jabatanPegawai;
 

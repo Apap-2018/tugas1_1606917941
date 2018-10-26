@@ -23,6 +23,9 @@ public class PegawaiServiceImpl implements PegawaiService {
 	private PegawaiDB pegawaiDb;
 	
 	@Autowired
+	private JabatanPegawaiService jabatanPegawaiService;
+	
+	@Autowired
 	private JabatanService jabatanService;
 	
 	@Override
@@ -60,13 +63,19 @@ public class PegawaiServiceImpl implements PegawaiService {
 		}
 		return posisi;
 	}
-
+	
+	/**
+	 * Method untuk mengurutan pegawai dari instansi berdasarkan tanggal lahir
+	 */
 	@Override
 	public List<PegawaiModel> getPegawaiByInstansi(InstansiModel instansi) {
 		// TODO Auto-generated method stub
 		return pegawaiDb.findByInstansiOrderByTanggalLahirAsc(instansi);
 	}
 
+	/**
+	 * Method untuk membuat nip
+	 */
 	@Override
 	public String generateNip(PegawaiModel pegawai) {
 		// TODO Auto-generated method stub
@@ -94,19 +103,28 @@ public class PegawaiServiceImpl implements PegawaiService {
 		return nip;
 	}
 
+	/**
+	 * Method untuk mencari pegawai dengan tanggal lahir dan tahun masuk yang sama dari sebuah instansi
+	 */
 	@Override
 	public List<PegawaiModel> getPegawaiByInstansiAndTanggalLahirAndTahunMasuk(InstansiModel instansi,
 			Date tanggalLahir, String tahunMasuk) {
 		// TODO Auto-generated method
 		return pegawaiDb.findByInstansiAndTanggalLahirAndTahunMasuk(instansi, tanggalLahir, tahunMasuk);
 	}
-
+	
+	/**
+	 * Method untuk menyimpan pegawai baru
+	 */
 	@Override
 	public void addPegawaiBaru(PegawaiModel pegawai) {
 		// TODO Auto-generated method stub
 		pegawaiDb.save(pegawai);
 	}
-
+	
+	/**
+	 * Method untuk fitur pencarian
+	 */
 	@Override
 	public List<PegawaiModel> findPegawaiByInstansiAndJabatan(InstansiModel instansi, JabatanModel jabatan) {
 		// TODO Auto-generated method stub
@@ -139,5 +157,54 @@ public class PegawaiServiceImpl implements PegawaiService {
 		}
 		return pencarian;
 	}
+	
+	/**
+	 * Method untuk mengubah pegawai
+	 */
 
+	@Override
+	public void updatePegawai(PegawaiModel pegawai) {
+		// TODO Auto-generated method stub
+		PegawaiModel archivePegawai = this.getPegawaiDetailByNip(pegawai.getNip());
+		
+		//ubah nip pegawai
+		String nipBaru = this.generateNip(pegawai);
+		System.out.println(nipBaru);
+		archivePegawai.setNip(nipBaru);
+		
+		//ubah nama, tempatlahir, tanggallahir, tahunmasuk, instansi
+		archivePegawai.setNama(pegawai.getNama());
+		archivePegawai.setTempatLahir(pegawai.getTempatLahir());
+		archivePegawai.setTanggalLahir(pegawai.getTanggalLahir());
+		archivePegawai.setTahunMasuk(pegawai.getTahunMasuk());
+		archivePegawai.setInstansi(pegawai.getInstansi());
+		
+		//ubah jabatan dari pegawai
+		int jumlahJabatanBaru = pegawai.getJabatanPegawai().size();
+		int jumlahJabatanLama = archivePegawai.getJabatanPegawai().size();
+		
+		if(jumlahJabatanBaru < jumlahJabatanLama) {
+			for(int i = 0; i < jumlahJabatanBaru;i++) {
+				archivePegawai.getJabatanPegawai().get(i).setJabatan(pegawai.getJabatanPegawai().get(i).getJabatan());
+			}
+			int diff = jumlahJabatanLama - jumlahJabatanBaru;
+			for(int j = 0; j < diff;j++) {
+				//jabatanPegawaiService.removeJabatanPegawai(archivePegawai.getJabatanPegawai().get(archivePegawai.getJabatanPegawai().size()-1));
+				archivePegawai.getJabatanPegawai().remove(archivePegawai.getJabatanPegawai().size()-1);
+			}
+			
+		} else {
+			for(int x = 0; x < jumlahJabatanLama;x++) {
+				archivePegawai.getJabatanPegawai().get(x).setJabatan(pegawai.getJabatanPegawai().get(x).getJabatan());
+			}
+			if(jumlahJabatanBaru > jumlahJabatanLama) {
+				for(int y= jumlahJabatanLama;y < jumlahJabatanBaru;y++) {
+					JabatanPegawaiModel baru = pegawai.getJabatanPegawai().get(y);
+					baru.setPegawai(archivePegawai);
+					jabatanPegawaiService.addJabatanPegawai(baru);
+				}
+			}
+		}
+		
+	}
 }

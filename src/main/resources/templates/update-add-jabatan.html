@@ -2,14 +2,14 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title th:text="'Penambahan' +${penambahan}"></title>
+	<title>Sukses</title>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
 	<br>
-	<h3 th:text="${penambahan} +' berhasil di tambahkan'"></h3>
-
+	<b><h3>Sukses!</h3></b>
+	<h3 th:text="'Jabatan berhasil '+${tujuan}"></h3>
 </body>
 </html>

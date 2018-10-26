@@ -18,4 +18,11 @@ public class JabatanPegawaiServiceImpl implements JabatanPegawaiService {
 		// TODO Auto-generated method stub
 		jabatanPegawaiDb.save(jabatanPegawai);
 	}
+
+	@Override
+	public void removeJabatanPegawai(JabatanPegawaiModel jabatanPegawai) {
+		// TODO Auto-generated method stub
+		jabatanPegawaiDb.delete(jabatanPegawai);
+	}
+
 }
