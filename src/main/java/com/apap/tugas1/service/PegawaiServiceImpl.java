@@ -28,6 +28,10 @@ public class PegawaiServiceImpl implements PegawaiService {
 	@Autowired
 	private JabatanService jabatanService;
 	
+	/**
+	 * Method untuk mencari pegawai berdasarkan nip
+	 */
+	
 	@Override
 	public PegawaiModel getPegawaiDetailByNip(String nip) {
 		// TODO Auto-generated method stub
@@ -80,25 +84,31 @@ public class PegawaiServiceImpl implements PegawaiService {
 	public String generateNip(PegawaiModel pegawai) {
 		// TODO Auto-generated method stub
 		String nip ="";
-		//4 Digit pertama dari id instansi
-		nip += pegawai.getInstansi().getId(); 
-		//6 Digit dari tanggal lahir
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		String lahir = sdf.format(pegawai.getTanggalLahir());
-		String[] tgl = lahir.split("/");
-		String tglLahir = tgl[2] + tgl[1] + tgl[0].substring(2, 4);
-		nip+= tglLahir;
-		//4 Digit dari tahun masuk
-		nip+= pegawai.getTahunMasuk();
 		List<PegawaiModel> tahunsama= this.getPegawaiByInstansiAndTanggalLahirAndTahunMasuk(pegawai.getInstansi(), pegawai.getTanggalLahir(), pegawai.getTahunMasuk());
 		int jumlah = tahunsama.size();
-		//2 digit dari tahun dan tanggal lahir yang sama
-		if (tahunsama.size() >= 10) {
-			nip += jumlah;
-		}
-		else {
+		if(jumlah > 0) {
+			Long nipbaru = Long.parseLong(tahunsama.get(jumlah - 1).getNip()) + 1;
+			nip = nipbaru.toString();
+			System.out.println(nip);
+		} else {
+			//4 Digit pertama dari id instansi
+			nip += pegawai.getInstansi().getId(); 
+			
+			//6 Digit dari tanggal lahir
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+			String lahir = sdf.format(pegawai.getTanggalLahir());
+			String[] tgl = lahir.split("/");
+			String tglLahir = tgl[2] + tgl[1] + tgl[0].substring(2, 4);
+			nip+= tglLahir;
+			
+			//4 Digit dari tahun masuk
+			nip+= pegawai.getTahunMasuk();
+			
+			//2 digit dari tahun dan tanggal lahir yang sama
 			nip += "0" + (jumlah+1);
+			System.out.println(nip);
 		}
+		
 		
 		return nip;
 	}
@@ -183,13 +193,13 @@ public class PegawaiServiceImpl implements PegawaiService {
 		int jumlahJabatanBaru = pegawai.getJabatanPegawai().size();
 		int jumlahJabatanLama = archivePegawai.getJabatanPegawai().size();
 		
+		//ketika jabatannya ada yang di hapus
 		if(jumlahJabatanBaru < jumlahJabatanLama) {
 			for(int i = 0; i < jumlahJabatanBaru;i++) {
 				archivePegawai.getJabatanPegawai().get(i).setJabatan(pegawai.getJabatanPegawai().get(i).getJabatan());
 			}
 			int diff = jumlahJabatanLama - jumlahJabatanBaru;
 			for(int j = 0; j < diff;j++) {
-				//jabatanPegawaiService.removeJabatanPegawai(archivePegawai.getJabatanPegawai().get(archivePegawai.getJabatanPegawai().size()-1));
 				archivePegawai.getJabatanPegawai().remove(archivePegawai.getJabatanPegawai().size()-1);
 			}
 			
@@ -197,6 +207,8 @@ public class PegawaiServiceImpl implements PegawaiService {
 			for(int x = 0; x < jumlahJabatanLama;x++) {
 				archivePegawai.getJabatanPegawai().get(x).setJabatan(pegawai.getJabatanPegawai().get(x).getJabatan());
 			}
+			
+			//ketika jabatannya ada yang di tambah
 			if(jumlahJabatanBaru > jumlahJabatanLama) {
 				for(int y= jumlahJabatanLama;y < jumlahJabatanBaru;y++) {
 					JabatanPegawaiModel baru = pegawai.getJabatanPegawai().get(y);
